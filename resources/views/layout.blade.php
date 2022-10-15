@@ -11,6 +11,20 @@
 <div class="container">
     <div class="row">
         <div class="col">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.category') }}">Categories</a>
+                    <a class="nav-link" href="{{ route('admin.tag') }}">Tags</a>
+                    <a class="nav-link" href="{{ route('admin.post') }}">Posts</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
             @yield('content')
         </div>
     </div>
