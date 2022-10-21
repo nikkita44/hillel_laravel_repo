@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class AdminPostController
@@ -37,11 +38,13 @@ class AdminPostController
             ],
             'body' => ['required', 'min: 7', 'max: 150'],
             'category_id' => ['required', 'exists:categories,id'],
-            'user_id' => ['required', 'exists:users,id'],
+            //'user_id' => ['required', 'exists:users,id'],
             'tags' => ['required', 'exists:tags,id']
         ]);
 
-        $post = Post::create($request->all());
+        $userInfo = $request->all();
+        $userInfo['user_id'] = Auth::id();
+        $post = Post::create($userInfo);
         $post->tags()->attach($request->input('tags'));
 
         return redirect()->route('admin.post');

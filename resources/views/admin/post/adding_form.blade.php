@@ -46,22 +46,6 @@
         @endif
 
         <div class="mb-3">
-            <label for="user_id" class="form-label">User</label>
-            <select name="user_id" id="user_id">
-                @foreach($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                @endforeach
-            </select>
-        </div>
-        @if($errors->has('user_id'))
-            @foreach($errors->get('user_id') as $error)
-                <div class="alert alert-danger" role="alert">
-                    {{ $error }}
-                </div>
-            @endforeach
-        @endif
-
-        <div class="mb-3">
             <label for="tags" class="form-label">Tags</label>
             <select name="tags[]" id="tags" multiple>
                 @foreach($tags as $tag)

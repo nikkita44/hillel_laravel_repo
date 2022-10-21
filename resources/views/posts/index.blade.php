@@ -16,6 +16,10 @@
         </thead>
         <tbody>
 
+        <div>
+            <a href="{{ route('auth.logout') }}">Logout</a>
+        </div>
+
         @forelse($posts as $post)
             <tr>
                 <td>{{$post->title}}</td>
