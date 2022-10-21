@@ -38,7 +38,6 @@ class AdminPostController
             ],
             'body' => ['required', 'min: 7', 'max: 150'],
             'category_id' => ['required', 'exists:categories,id'],
-            //'user_id' => ['required', 'exists:users,id'],
             'tags' => ['required', 'exists:tags,id']
         ]);
 
@@ -73,11 +72,12 @@ class AdminPostController
             ],
             'body' => ['required', 'min: 7', 'max: 150'],
             'category_id' => ['required', 'exists:categories,id'],
-            'user_id' => ['required', 'exists:users,id'],
             'tags' => ['required', 'exists:tags,id']
         ]);
 
-        $post->update($request->all());
+        $userInfo = $request->all();
+        $userInfo['user_id'] = Auth::id();
+        $post->update($userInfo);
         $post->tags()->sync($request->input('tags'));
 
         return redirect()->route('admin.post');
