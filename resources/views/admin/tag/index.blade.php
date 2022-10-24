@@ -2,7 +2,10 @@
 
 @section('content')
     <h1>Tags</h1>
-    <a href=" {{route('admin.tag.create')}} " class="btn btn-primary">Add new</a>
+
+    @can('create', \App\Models\Tag::class)
+        <a href=" {{route('admin.tag.create')}} " class="btn btn-primary">Add new</a>
+    @endcan
 
     <table class="table table-striped">
         <thead>
@@ -21,8 +24,11 @@
                 <td>{{$tag->slug}}</td>
                 <td>{{$tag->created_at}}</td>
                 <td>{{$tag->updated_at}}</td>
-                <td><a href=" {{route('admin.tag.edit', ['id' => $tag->id])}} " class="btn btn-secondary">Update</a></td>
-                <td><a href=" {{route('admin.tag.destroy', ['id' => $tag->id])}} " class="btn btn-secondary">Delete</a></td>
+                <td><a href=" {{route('admin.tag.show', ['id' => $tag->id])}} " class="btn btn-secondary">View</a></td>
+                @can('update', $tag)
+                    <td><a href=" {{route('admin.tag.edit', ['id' => $tag->id])}} " class="btn btn-secondary">Update</a></td>
+                    <td><a href=" {{route('admin.tag.destroy', ['id' => $tag->id])}} " class="btn btn-secondary">Delete</a></td>
+                @endcan
             </tr>
         @empty
             <p>Empty</p>

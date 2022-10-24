@@ -18,4 +18,9 @@ class Tag extends Model
     {
         return $this->belongsToMany(Post::class)->withTimestamps();
     }
+
+    public function editorial_changes()
+    {
+        return $this->morphMany(Editorial_change::class, 'changeable');
+    }
 }

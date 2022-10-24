@@ -2,7 +2,10 @@
 
 @section('content')
     <h1>Posts</h1>
-    <a href=" {{route('admin.post.create')}} " class="btn btn-primary">Add new</a>
+
+    @can('create', \App\Models\Post::class)
+        <a href=" {{route('admin.post.create')}} " class="btn btn-primary">Add new</a>
+    @endcan
 
     <table class="table table-striped">
         <thead>
@@ -31,8 +34,11 @@
                 <td>{{$post->user->name}}</td>
                 <td>{{$post->created_at}}</td>
                 <td>{{$post->updated_at}}</td>
-                <td><a href=" {{route('admin.post.edit', ['id' => $post->id])}} " class="btn btn-secondary">Update</a></td>
-                <td><a href=" {{route('admin.post.destroy', ['id' => $post->id])}} " class="btn btn-secondary">Delete</a></td>
+                <td><a href=" {{route('admin.post.show', ['id' => $post->id])}} " class="btn btn-secondary">View</a></td>
+                @can('update', $post)
+                    <td><a href=" {{route('admin.post.edit', ['id' => $post->id])}} " class="btn btn-secondary">Update</a></td>
+                    <td><a href=" {{route('admin.post.destroy', ['id' => $post->id])}} " class="btn btn-secondary">Delete</a></td>
+                @endcan
             </tr>
         @empty
             <p>Empty</p>

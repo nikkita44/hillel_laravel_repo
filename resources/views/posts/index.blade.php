@@ -1,6 +1,11 @@
 @extends('layout')
 
 @section('content')
+    <div>
+        <a href="{{ route('auth.logout') }}">Logout</a>
+    </div>
+
+    @can('access-dashboard-actions')
 
     <table class="table table-striped">
         <thead>
@@ -15,10 +20,6 @@
         </tr>
         </thead>
         <tbody>
-
-        <div>
-            <a href="{{ route('auth.logout') }}">Logout</a>
-        </div>
 
         @forelse($posts as $post)
             <tr>
@@ -39,4 +40,7 @@
         @endforelse
         </tbody>
     </table>
+
+    @endcan
+
 @endsection

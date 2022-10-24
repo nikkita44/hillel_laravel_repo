@@ -16,6 +16,7 @@
                     <a class="nav-link" href="{{ route('admin.category') }}">Categories</a>
                     <a class="nav-link" href="{{ route('admin.tag') }}">Tags</a>
                     <a class="nav-link" href="{{ route('admin.post') }}">Posts</a>
+                    <a class="nav-link" href="{{ route('index') }}">Main</a>
                 </li>
             </ul>
         </div>

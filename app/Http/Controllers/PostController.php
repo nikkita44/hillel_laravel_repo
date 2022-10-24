@@ -13,7 +13,7 @@ class PostController
 {
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::with(['category', 'user', 'tags'])->get();
 
         return view('posts/index', compact( 'posts'));
     }
