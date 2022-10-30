@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminPostController;
 use App\Http\Controllers\AdminTagController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Oauth\GitHubController;
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['guest'])->group(function(){
     Route::get('/auth/login', [AuthController::class, 'login'])->name('auth.login');
     Route::post('/auth/handleLogin', [AuthController::class, 'handleLogin'])->name('auth.handle.login');
+
+    Route::get('oauth/github/callback', GitHubController::class)->name('oauth.github.callback');
 });
 
 Route::middleware(['auth'])->group(function(){

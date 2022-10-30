@@ -23,6 +23,8 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
+        <br>
+        <a href="{{ $url }}">Auth with GitHub</a>
     </form>
 
 @endsection
