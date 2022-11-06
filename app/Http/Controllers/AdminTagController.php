@@ -5,20 +5,30 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Editorial_change;
 use App\Models\Tag;
+use App\Repositories\BaseRepositoryInterface;
+use App\Repositories\Tag\TagRepository;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class AdminTagController extends Controller
 {
+    public $repository;
+
+    public function __construct(BaseRepositoryInterface $repository)
+    {
+        $this->repository = $repository;
+
+    }
+
     public function index()
     {
-        $tags = Tag::all();
+        $tags = $this->repository->all();
         return view('admin/tag/index', compact('tags'));
     }
 
     public function show($id)
     {
-        $tag = Tag::find($id);
+        $tag = $this->repository->find($id);
         return view('admin/tag/show', compact('tag'));
     }
 
@@ -27,7 +37,7 @@ class AdminTagController extends Controller
         $request->validate([
             'body' => ['required', 'min: 5', 'max: 150'],
         ]);
-        $tag = Tag::find($id);
+        $tag = $this->repository->find($id);
         $editorial_change = new Editorial_change();
         $editorial_change->body = $request->input('body');
         $tag->editorial_changes()->save($editorial_change);
@@ -54,14 +64,14 @@ class AdminTagController extends Controller
             'slug' => ['required']
         ]);
 
-        Tag::create($request->all());
+        $this->repository->create($request->all());
 
         return redirect()->route('admin.tag');
     }
 
     public function edit($id)
     {
-        $tag = Tag::find($id);
+        $tag = $this->repository->find($id);
         $this->authorize('update', $tag);
 
         return view('admin/tag/updating_form', compact('tag'));
@@ -70,7 +80,7 @@ class AdminTagController extends Controller
     public function update(Request $request)
     {
         $tag_id = $request->input('id');
-        $tag = Tag::find($tag_id);
+        $tag = $this->repository->find($tag_id);
 
         $request->validate([
             'title' => [
@@ -81,16 +91,16 @@ class AdminTagController extends Controller
             'slug' => ['required']
         ]);
 
-        $tag->update($request->all());
+        $this->repository->update($request->all(), $tag_id);
 
         return redirect()->route('admin.tag');
     }
 
     public function destroy($id)
     {
-        $tag = Tag::find($id);
+        $tag = $this->repository->find($id);;
         $this->authorize('delete', $tag);
-        $tag->delete();
+        $this->repository->delete($id);
 
         return redirect()->route('admin.tag');
     }
