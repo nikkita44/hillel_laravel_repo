@@ -5,9 +5,9 @@ namespace App\Providers;
 use App\Services\Geo\GeoServiceInterface;
 use App\Services\Geo\IpApiGeoService;
 use App\Services\Geo\MaxMindService;
-use App\Services\UserAgentClient\PhpUserAgentService;
-use App\Services\UserAgentClient\UserAgentClientServiceInterface;
-use App\Services\UserAgentClient\WhichBrowserService;
+use Nick44\UserAgent\PhpUserAgentService;
+use Nick44\UserAgent\UserAgentClientServiceInterface;
+use Nick44\UserAgent\WhichBrowserService;
 use GeoIp2\Database\Reader;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,11 +23,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(GeoServiceInterface::class, function(){
             //return new MaxMindService();
             return new IpApiGeoService();
-        });
-
-        $this->app->singleton(UserAgentClientServiceInterface::class, function(){
-            //return new PhpUserAgentService();
-            return new WhichBrowserService();
         });
     }
 

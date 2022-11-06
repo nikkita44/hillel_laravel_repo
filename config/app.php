@@ -195,7 +195,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Repositories\Tag\TagServiceProvider::class,
-
+        Nick44\UserAgent\UserAgentServiceProvider::class
     ],
 
     /*

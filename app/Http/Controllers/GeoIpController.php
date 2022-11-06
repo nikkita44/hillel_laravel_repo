@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Visit;
 use App\Services\Geo\GeoServiceInterface;
-use App\Services\UserAgentClient\UserAgentClientServiceInterface;
-use GeoIp2\Database\Reader;
+//use App\Services\UserAgentClient\UserAgentClientServiceInterface;
+use Nick44\UserAgent\UserAgentClientServiceInterface;
 
 class GeoIpController extends Controller
 {
     public function index(GeoServiceInterface $reader, UserAgentClientServiceInterface $uaclient)
     {
         $ip = request()->ip();
-        //$ip = '46.33.39.152';
-        $ip = '104.101.112.0';
+        $ip = '46.33.39.152';
+        //$ip = '104.101.112.0';
 
         $reader->parse($ip);
         $isoCode = $reader->getIsoCode();
