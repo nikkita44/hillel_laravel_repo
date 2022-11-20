@@ -2,20 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\TestEmail;
+use App\Jobs\UserAgentJob;
+use App\Mail\WelcomeMail;
 use App\Models\Visit;
 use App\Services\Geo\GeoServiceInterface;
 //use App\Services\UserAgentClient\UserAgentClientServiceInterface;
+use Illuminate\Support\Facades\Mail;
 use Nick44\UserAgent\UserAgentClientServiceInterface;
 
 class GeoIpController extends Controller
 {
     public function index(GeoServiceInterface $reader, UserAgentClientServiceInterface $uaclient)
     {
-        $ip = request()->ip();
-        $ip = '46.33.39.152';
-        //$ip = '104.101.112.0';
+        //$mail = (new WelcomeMail('Nick12'))->onQueue('default');
+        //Mail::to('some@test.com')->queue($mail);
 
-        $reader->parse($ip);
+        $ip = '46.33.39.152';
+
+        UserAgentJob::dispatch($ip);
+
+        /*$reader->parse($ip);
         $isoCode = $reader->getIsoCode();
         $continent = $reader->getContinent();
 
@@ -31,7 +38,7 @@ class GeoIpController extends Controller
                 'browser' => $browser,
                 'os' => $os,
             ]);
-        }
+        }*/
     }
 
 }
