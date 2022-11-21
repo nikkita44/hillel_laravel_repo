@@ -13,32 +13,14 @@ use Nick44\UserAgent\UserAgentClientServiceInterface;
 
 class GeoIpController extends Controller
 {
-    public function index(GeoServiceInterface $reader, UserAgentClientServiceInterface $uaclient)
+    public function index()
     {
-        //$mail = (new WelcomeMail('Nick12'))->onQueue('default');
-        //Mail::to('some@test.com')->queue($mail);
+        $mail = (new WelcomeMail('Nick12'))->onQueue('default');
+        Mail::to('some@test.com')->queue($mail);
 
         $ip = '46.33.39.152';
 
-        UserAgentJob::dispatch($ip);
-
-        /*$reader->parse($ip);
-        $isoCode = $reader->getIsoCode();
-        $continent = $reader->getContinent();
-
-        $uaclient->parse();
-        $browser = $uaclient->getBrowser();
-        $os = $uaclient->getOS();
-
-        if(!empty($isoCode) && !empty($continent)){
-            Visit::create([
-                'ip' => $ip,
-                'iso_code' => $isoCode,
-                'continent_code' => $continent,
-                'browser' => $browser,
-                'os' => $os,
-            ]);
-        }*/
+        UserAgentJob::dispatch($ip)->onQueue('parsing');
     }
 
 }
